@@ -80,10 +80,6 @@ const boeSchema = new Schema({
         type: String,
         required: true
     },
-    margin: {
-        type: String,
-        required: true
-    },
 
 }, { timestamps: true })
 

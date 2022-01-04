@@ -77,11 +77,11 @@ const boeSchema = new Schema({
         required: true
     },
     benefit: {
-        type: String,
+        type: number,
         required: true
     },
     margin: {
-        type: String,
+        type: number,
         required: true
     },
 

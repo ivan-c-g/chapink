@@ -19,17 +19,22 @@ export const NewBoeForm = () => {
     const [reform, setReform] = useState(0)
     const [interiorDesign, setInteriorDesign] = useState(0)
     const [holdingCost, setHoldingCost] = useState(0)
-    const [costAcquisition, setCostAcquisition] = useState(0)
+    const [costAcquistion, setCostAcquisition] = useState(0)
 
     const [c1, setC1] = useState(0)
 
     const [subtotal, setSubtotal] = useState(0)
-    const [valoration, setValoration] = useState(0)
-    const [porcentajeDefault, setPorcentajeDefault] = useState(2)
-    const [estimatedTerm, setEstimatedTerm] = useState()
-
+    const [c2, setC2] = useState(0)
 
     const boeService = new BoeService()
+
+    const getSubtotalPrice = () => {
+
+        let result = 0
+        result = Number.parseFloat(propertyPrice, 2) + Number.parseFloat(costAcquistion, 2) + Number.parseFloat(reform, 2) +
+            Number.parseFloat(broker, 2) + Number.parseFloat(licenseAndFees, 2) + Number.parseFloat(holdingCost, 2) + Number.parseFloat(interiorDesign, 2)
+        return result
+    }
 
     const onChange = (e) => {
 
@@ -71,91 +76,23 @@ export const NewBoeForm = () => {
             case "interiorDesign":
                 setInteriorDesign(value)
                 break;
-            case "valoration":
-                setValoration(value)
-                break;
-            case "costAcquisition":
-                setCostAcquisition(value)
-                break;
-            case "valoration":
-                setValoration(value)
-                break;
-            case "porcentajeDefault":
-                setPorcentajeDefault(value)
-                break;
-            case "estimatedTerm":
-                setEstimatedTerm(value)
-                break;
             default:
                 break;
         }
     }
 
-    const handleSubmit = async (e) => {
+    // console.log(costAcquistion)
 
+    const handleSubmit = async (e) => {
         e.preventDefault(e)
         try {
-            const user = await boeService.create({ street, number, strais, plant, door, typeProperty, propertyPrice, broker, licenseAndFees, reform, holdingCost, interiorDesign, subTotal: getSubtotalPrice(), valoration, costAcquisition: getCostAcquisition(), chhggManagemetFee: getChhManagementFee(), totalInversion: getTotalInversion(), valoration, costOfSale: getTotalCostOfSale(), priceNetoSale: getPriceNetoSale(), estimatedTerm, benefit: getBenefit(), margin: getMargin() })
+            const user = await boeService.create({ street, number, strais, plant, door, typeProperty, propertyPrice, broker, licenseAndFees, reform, holdingCost, interiorDesign, subTotal: getSubtotalPrice() })
         } catch (error) {
             console.log(error)
         }
     }
+    const getC3 = () => {
 
-    const getSubtotalPrice = () => {
-
-        let result = 0
-        result = Number.parseFloat(propertyPrice, 2) + Number.parseFloat(costAcquisition, 2) + Number.parseFloat(reform, 2) +
-            Number.parseFloat(broker, 2) + Number.parseFloat(licenseAndFees, 2) + Number.parseFloat(holdingCost, 2) + Number.parseFloat(interiorDesign, 2)
-        return result
-
-    }
-
-    const getCostAcquisition = () => {
-        let cost = 0
-        cost = typeProperty === "oficina" || typeProperty === "local" ?
-            (propertyPrice * 0.071).toFixed(2) :
-            (propertyPrice * 0.032).toFixed(2)
-        console.log(cost)
-        return cost
-    }
-    const getChhManagementFee = () => {
-        let cost = 0
-        cost = typeProperty === "oficina" || typeProperty === "local" ?
-            (getSubtotalPrice() * 0.071).toFixed(2) :
-            (getSubtotalPrice() * 0.032).toFixed(2)
-        console.log(cost)
-        return cost
-    }
-
-    const getTotalInversion = () => {
-
-        let cost = 0
-        cost = getSubtotalPrice() + Number.parseFloat(getChhManagementFee())
-        return cost
-
-    }
-    const getTotalCostOfSale = () => {
-        let cost = 0
-        cost = Number.parseFloat(valoration * porcentajeDefault / 100).toFixed(2)
-        return cost
-    }
-
-    const getPriceNetoSale = () => {
-        let cost = 0
-        cost = Number.parseFloat(valoration - getTotalCostOfSale()).toFixed(2)
-        return cost
-    }
-
-    const getBenefit = () => {
-        let cost = 0
-        cost = Number.parseFloat(getPriceNetoSale() - getTotalInversion()).toFixed(2)
-        return cost
-    }
-
-    const getMargin = () => {
-        let cost = 0
-        cost = Number.parseFloat(getBenefit() / getTotalInversion()).toFixed(2)
-        return cost
     }
 
     return (
@@ -191,7 +128,7 @@ export const NewBoeForm = () => {
                         <span>3.2%</span>}
                     </label>
 
-                    <input type="number" name="costAcquisition" onChange={(e) => onChange(e)} value={getCostAcquisition()} disabled />
+                    <input type="number" name="costAcquisition" value={typeProperty === "oficina" || typeProperty === "local" ? (propertyPrice * 0.071).toFixed(2) : (propertyPrice * 0.032).toFixed(2)} disabled />
 
                     <label>Broker: </label>
                     <input type="number" name="broker" onChange={(e) => onChange(e)} value={broker} />
@@ -211,34 +148,15 @@ export const NewBoeForm = () => {
                     <label>Subtotal: </label>
                     <input type="number" name="subtotal" value={getSubtotalPrice()} disabled />
 
+
+
                     <label>CHGG Management fee: {typeProperty === "oficina" || typeProperty === "local" ?
                         <span>6.05%</span> :
                         <span>3.63%</span>}
                     </label>
-                    <input type="number" name="chhggManagemetFee" value={getChhManagementFee()} disabled />
+                    <label>CHGG Managemet fee: </label>
 
-                    <label>Inversion total:</label>
-                    <input type="number" name="totalInversion" value={getTotalInversion()} disabled />
-
-                    <label>Valoración: </label>
-                    <input type="text" name="valoration" onChange={(e) => onChange(e)} value={valoration} />
-
-                    <label>Coste de venta: </label>
-                    <input type="text" name="costOfSale" value={getTotalCostOfSale()} disabled />
-                    <input type="text" name="porcentajeDefault" onChange={(e) => onChange(e)} value={porcentajeDefault} />
-
-                    <label>Precio neto de venta: </label>
-                    <input type="text" name="priceNetoSale" onChange={(e) => onChange(e)} value={getPriceNetoSale()} />
-
-                    <label>Plazo estimado total ( meses ): </label>
-                    <input type="number" name="estimatedTerm" onChange={(e) => onChange(e)} value={estimatedTerm} />
-
-                    <h2>Resultado proforma </h2>
-
-                    <label>Beneficio: </label>
-                    <input type="number" name="benefit" onChange={(e) => onChange(e)} value={getBenefit()} />
-                    <label>Margen: </label>
-                    <input type="number" name="margin" onChange={(e) => onChange(e)} value={getMargin()} />
+                    <input type="number" name="chhggManagemetFee" value={getC3()} disabled />
 
                     <button>Guardar BOE</button>
                 </form>

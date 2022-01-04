@@ -67,23 +67,7 @@ const boeSchema = new Schema({
     totalInversion: {
         type: String,
         required: true
-    },
-    costOfSale: {
-        type: String,
-        required: true
-    },
-    priceNetoSale: {
-        type: String,
-        required: true
-    },
-    benefit: {
-        type: String,
-        required: true
-    },
-    margin: {
-        type: String,
-        required: true
-    },
+    }
 
 }, { timestamps: true })
 

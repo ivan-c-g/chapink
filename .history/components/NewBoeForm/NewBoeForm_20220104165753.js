@@ -95,7 +95,7 @@ export const NewBoeForm = () => {
 
         e.preventDefault(e)
         try {
-            const user = await boeService.create({ street, number, strais, plant, door, typeProperty, propertyPrice, broker, licenseAndFees, reform, holdingCost, interiorDesign, subTotal: getSubtotalPrice(), valoration, costAcquisition: getCostAcquisition(), chhggManagemetFee: getChhManagementFee(), totalInversion: getTotalInversion(), valoration, costOfSale: getTotalCostOfSale(), priceNetoSale: getPriceNetoSale(), estimatedTerm, benefit: getBenefit(), margin: getMargin() })
+            const user = await boeService.create({ street, number, strais, plant, door, typeProperty, propertyPrice, broker, licenseAndFees, reform, holdingCost, interiorDesign, subTotal: getSubtotalPrice(), valoration, costAcquisition: getCostAcquisition(), chhggManagemetFee: getChhManagementFee(), totalInversion: getTotalInversion(), valoration, costOfSale: getTotalCostOfSale(), priceNetoSale: getPriceNetoSale(), estimatedTerm })
         } catch (error) {
             console.log(error)
         }
@@ -148,13 +148,13 @@ export const NewBoeForm = () => {
 
     const getBenefit = () => {
         let cost = 0
-        cost = Number.parseFloat(getPriceNetoSale() - getTotalInversion()).toFixed(2)
+        // cost = Number.parseFloat(getPriceNetoSale() - getTotalInversion()).toFixed(2)
         return cost
     }
 
     const getMargin = () => {
         let cost = 0
-        cost = Number.parseFloat(getBenefit() / getTotalInversion()).toFixed(2)
+        // cost = Number.parseFloat(getBenefit() / getTotalInversion()).toFixed(2)
         return cost
     }
 

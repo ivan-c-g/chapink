@@ -75,15 +75,7 @@ const boeSchema = new Schema({
     priceNetoSale: {
         type: String,
         required: true
-    },
-    benefit: {
-        type: String,
-        required: true
-    },
-    margin: {
-        type: String,
-        required: true
-    },
+    }
 
 }, { timestamps: true })
 

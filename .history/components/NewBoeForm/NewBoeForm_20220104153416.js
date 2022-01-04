@@ -26,7 +26,6 @@ export const NewBoeForm = () => {
     const [subtotal, setSubtotal] = useState(0)
     const [valoration, setValoration] = useState(0)
     const [porcentajeDefault, setPorcentajeDefault] = useState(2)
-    const [estimatedTerm, setEstimatedTerm] = useState()
 
 
     const boeService = new BoeService()
@@ -80,11 +79,8 @@ export const NewBoeForm = () => {
             case "valoration":
                 setValoration(value)
                 break;
-            case "porcentajeDefault":
+            case "porcenjeDefault":
                 setPorcentajeDefault(value)
-                break;
-            case "estimatedTerm":
-                setEstimatedTerm(value)
                 break;
             default:
                 break;
@@ -95,21 +91,22 @@ export const NewBoeForm = () => {
 
         e.preventDefault(e)
         try {
-            const user = await boeService.create({ street, number, strais, plant, door, typeProperty, propertyPrice, broker, licenseAndFees, reform, holdingCost, interiorDesign, subTotal: getSubtotalPrice(), valoration, costAcquisition: getCostAcquisition(), chhggManagemetFee: getChhManagementFee(), totalInversion: getTotalInversion(), valoration, costOfSale: getTotalCostOfSale(), priceNetoSale: getPriceNetoSale(), estimatedTerm, benefit: getBenefit(), margin: getMargin() })
+            const user = await boeService.create({ street, number, strais, plant, door, typeProperty, propertyPrice, broker, licenseAndFees, reform, holdingCost, interiorDesign, subTotal: getSubtotalPrice(), valoration, costAcquisition: getCostAcquisition(), chhggManagemetFee: getChhManagementFee(), getTotalInversion: getTotalInversion(), valoration })
         } catch (error) {
             console.log(error)
         }
     }
 
     const getSubtotalPrice = () => {
-
         let result = 0
         result = Number.parseFloat(propertyPrice, 2) + Number.parseFloat(costAcquisition, 2) + Number.parseFloat(reform, 2) +
             Number.parseFloat(broker, 2) + Number.parseFloat(licenseAndFees, 2) + Number.parseFloat(holdingCost, 2) + Number.parseFloat(interiorDesign, 2)
         return result
-
     }
 
+    const getC3 = () => {
+
+    }
     const getCostAcquisition = () => {
         let cost = 0
         cost = typeProperty === "oficina" || typeProperty === "local" ?
@@ -133,29 +130,6 @@ export const NewBoeForm = () => {
         cost = getSubtotalPrice() + Number.parseFloat(getChhManagementFee())
         return cost
 
-    }
-    const getTotalCostOfSale = () => {
-        let cost = 0
-        cost = Number.parseFloat(valoration * porcentajeDefault / 100).toFixed(2)
-        return cost
-    }
-
-    const getPriceNetoSale = () => {
-        let cost = 0
-        cost = Number.parseFloat(valoration - getTotalCostOfSale()).toFixed(2)
-        return cost
-    }
-
-    const getBenefit = () => {
-        let cost = 0
-        cost = Number.parseFloat(getPriceNetoSale() - getTotalInversion()).toFixed(2)
-        return cost
-    }
-
-    const getMargin = () => {
-        let cost = 0
-        cost = Number.parseFloat(getBenefit() / getTotalInversion()).toFixed(2)
-        return cost
     }
 
     return (
@@ -224,21 +198,8 @@ export const NewBoeForm = () => {
                     <input type="text" name="valoration" onChange={(e) => onChange(e)} value={valoration} />
 
                     <label>Coste de venta: </label>
-                    <input type="text" name="costOfSale" value={getTotalCostOfSale()} disabled />
+                    <input type="text" name="costOfSale" onChange={(e) => onChange(e)} value={valoration} />
                     <input type="text" name="porcentajeDefault" onChange={(e) => onChange(e)} value={porcentajeDefault} />
-
-                    <label>Precio neto de venta: </label>
-                    <input type="text" name="priceNetoSale" onChange={(e) => onChange(e)} value={getPriceNetoSale()} />
-
-                    <label>Plazo estimado total ( meses ): </label>
-                    <input type="number" name="estimatedTerm" onChange={(e) => onChange(e)} value={estimatedTerm} />
-
-                    <h2>Resultado proforma </h2>
-
-                    <label>Beneficio: </label>
-                    <input type="number" name="benefit" onChange={(e) => onChange(e)} value={getBenefit()} />
-                    <label>Margen: </label>
-                    <input type="number" name="margin" onChange={(e) => onChange(e)} value={getMargin()} />
 
                     <button>Guardar BOE</button>
                 </form>

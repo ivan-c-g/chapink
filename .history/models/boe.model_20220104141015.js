@@ -63,27 +63,8 @@ const boeSchema = new Schema({
     chhggManagemetFee: {
         type: String,
         required: true
-    },
-    totalInversion: {
-        type: String,
-        required: true
-    },
-    costOfSale: {
-        type: String,
-        required: true
-    },
-    priceNetoSale: {
-        type: String,
-        required: true
-    },
-    benefit: {
-        type: String,
-        required: true
-    },
-    margin: {
-        type: String,
-        required: true
-    },
+
+    }
 
 }, { timestamps: true })
 
