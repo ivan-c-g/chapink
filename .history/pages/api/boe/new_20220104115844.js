@@ -1,0 +1,31 @@
+import connectDB from "../../../services/mongoose.services";
+import Boe from '../../../models/boe.model'
+
+
+const newBoe = async (req, res) => {
+
+    const { street, number, strais, plant, door } = req.body
+
+    console.log(req.body);
+
+    if (req.method === 'POST') {
+
+        try {
+            const boe = await Boe.findOne({ street })
+            if (!boe) {
+                console.log("create")
+                const newBoe = await Boe.create(req.body)
+                return res.status(200).json(newBoe)
+            } else {
+                return res.status(500).json("Boe exist")
+            }
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+
+    } else {
+        res.status(422).send('req_method_not_supported')
+    }
+}
+
+export default connectDB(newBoe)
