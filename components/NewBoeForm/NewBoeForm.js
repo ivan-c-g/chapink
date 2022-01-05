@@ -13,7 +13,7 @@ export const NewBoeForm = () => {
     const [door, setDoor] = useState("")
     const [typeProperty, setTypeProperty] = useState("")
 
-    const [propertyPrice, setPropertyPrice] = useState(0)
+    const [propertyPrice, setPropertyPrice] = useState(null)
     const [broker, setBroker] = useState(0)
     const [licenseAndFees, setLicenseAndFees] = useState(0)
     const [reform, setReform] = useState(0)
@@ -26,7 +26,7 @@ export const NewBoeForm = () => {
     const [subtotal, setSubtotal] = useState(0)
     const [valoration, setValoration] = useState(0)
     const [porcentajeDefault, setPorcentajeDefault] = useState(2)
-    const [estimatedTerm, setEstimatedTerm] = useState()
+    const [estimatedTerm, setEstimatedTerm] = useState(0)
 
 
     const boeService = new BoeService()
@@ -115,7 +115,6 @@ export const NewBoeForm = () => {
         cost = typeProperty === "oficina" || typeProperty === "local" ?
             (propertyPrice * 0.071).toFixed(2) :
             (propertyPrice * 0.032).toFixed(2)
-        console.log(cost)
         return cost
     }
     const getChhManagementFee = () => {
@@ -123,7 +122,6 @@ export const NewBoeForm = () => {
         cost = typeProperty === "oficina" || typeProperty === "local" ?
             (getSubtotalPrice() * 0.071).toFixed(2) :
             (getSubtotalPrice() * 0.032).toFixed(2)
-        console.log(cost)
         return cost
     }
 
